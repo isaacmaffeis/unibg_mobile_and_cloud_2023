@@ -82,6 +82,10 @@ db.students.find({$or: [{fullTime:true}, {age:{$lte:22}}]})  // OR
 db.students.find({$nor: [{fullTime:true}, {age:{$lte:22}}]}) // NOR (every condition must be false)
 db.students.find({age: {$not:{$gte:30}}}) // NOT (also give null value)
 
+// Nested values
+db.giochi.find({"Giocatori.minimo":{$exists:true}, "Giocatori.massimo": {$exists:true}, $expr:{$ne:["$Giocatori.minimo","$Giocatori.massimo"]}}).count()
+// access with dot notation and "double quotes"
+
 // Indexes
 db.students.find({name:"Larry"}).explain("executionStats") // linear search
 db.students.createIndex({name: 1}) // create an index
