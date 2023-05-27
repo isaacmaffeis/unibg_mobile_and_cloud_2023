@@ -35,6 +35,9 @@ db.Clienti.find({FlagUE:{$ne:null}})
 db.Clienti.find({annoDiNascita:{$eq:2018}})
 db.Clienti.find({$expr:{$eq:[{$year:{$toDate:"$DataNascita"}}, 2018]}})
 
+// 5) Find documents where the spent amount exceeds the budget:
+db.monthlyBudget.find({ $expr: { $gt: [ "$spent" , "$budget" ]}})
+
 // --------------------------------------------- //
 /* https://www.w3resource.com/mongodb-exercises/ */
 

@@ -86,6 +86,9 @@ db.students.find({age: {$not:{$gte:30}}}) // NOT (also give null value)
 db.giochi.find({"Giocatori.minimo":{$exists:true}, "Giocatori.massimo": {$exists:true}, $expr:{$ne:["$Giocatori.minimo","$Giocatori.massimo"]}}).count()
 // access with dot notation and "double quotes"
 
+// Expression $expr
+db.monthlyBudget.find( { $expr: { $gt: [ "$spent" , "$budget" ] } } ) // find documents where the spent amount exceeds the budget:
+
 // Indexes
 db.students.find({name:"Larry"}).explain("executionStats") // linear search
 db.students.createIndex({name: 1}) // create an index
