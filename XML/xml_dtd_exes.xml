@@ -1,0 +1,258 @@
+Da XML a DTD:
+
+- Specifica di Address_list:
+    Una address list contiene almeno una informazione. Ogni
+    informazione include il nome, zero o più indirizzi, zero o più
+    numeri di telefono, zero o più indirizzi email, eventualmente
+    la nazionalità, zero o più note.
+    Il nome contiene il nome proprio, zero o più secondi nomi, ed
+    il cognome.
+    Un indirizzo è caratterizzato da almeno una via, un indirizzo
+    postale, eventualmente la provincia, e sicuramente il paese
+
+- XML:
+    <?xml version="1.0" encoding="ISO-8859-1" ?>
+    <!DOCTYPE Address_list SYSTEM "address_book.dtd">
+    <Address_list>
+        <Information>
+            <Full_name>
+                <First_name>Pasquale</First_name>
+                <Middle_name>Maria</Middle_name>
+                <Last_name>Semeraro</Last_name>
+            </Full_name>
+            <Address>
+                <Street>via Col Vento 13</Street>
+                <Postal_code>40100</Postal_code>
+                <Country>Italia</Country>
+            </Address>
+            <Email>p.m.semeraro@unibo.it</Email>
+            <Nationality>Italiana</Nationality>
+            <Other_information>Senior Sw Architect</Other_information>
+        </Information>
+        <Information>
+            <Full_name>
+                <First_name>Andrea</First_name>
+                <Last_name>Esposito</Last_name>
+            </Full_name>
+        </Information>
+    </Address_list>
+
+- DTD:
+    <!ELEMENT Address_list (Information)+>
+    <!ELEMENT Information (Full_name , Address* , Email* , Nationality? , Other_information*)+>
+    <!ELEMENT First_name (#PCDATA)>
+    <!ELEMENT Middle_name (#PCDATA)>
+    <!ELEMENT Last_name (#PCDATA)>
+    <!ELEMENT Street (#PCDATA)>
+    <!ELEMENT Postal_code (#PCDATA)>
+    <!ELEMENT Area (#PCDATA)>
+    <!ELEMENT Country (#PCDATA)>
+    <!ELEMENT Telephone (#PCDATA)>
+    <!ELEMENT Email (#PCDATA)>
+    <!ELEMENT Nationality (#PCDATA)>
+    <!ELEMENT Other_information (#PCDATA)>
+
+-------------------------------------------------------------------------------------
+
+DA XML a DTD:
+- XML:
+    <?xml version="1.0" encoding="iso-8859-1"?>
+    <!DOCTYPE recipe SYSTEM "cooking.dtd">
+    <recipe>
+        <recipe_head>
+            <recipe_name>Cold Salmon in Creamy Spiced Sauce</recipe_name>
+            <recipe_author>Hilaire Walden</recipe_author>
+            <meal_type>Fish and Shellfish</meal_type>
+        </recipe_head>
+        <recipe_body>
+            <ingredients>
+                <ingredient>1/2 teaspoon finely crushed cumin seeds</ingredient>
+                <ingredient>1 teaspoon chilli powder</ingredient>
+                <ingredient>salt and freshly ground black pepper</ingredient>
+            </ingredients>
+            <directions>
+                <direction>Mix together the cumin seeds, chilli powder and pepper and rub into the fish.</direction>
+                <direction>Heat the oil in a frying pan, add the garlic and ginger and heat until they sizzle.</direction>
+            </directions>
+        </recipe_body>
+        <recipe_footer>
+            <serving>4</serving>
+            <preparation_time>15 minutes</preparation_time>
+        </recipe_footer>
+        <document_info>
+            <document_author>Hilaire Walden</document_author>
+            <date_updated>21/01/07</date_updated>
+            <source>Easy to Cook, Hot and Spicy</source>
+        </document_info>
+    </recipe>
+
+- DTD:
+    <!ELEMENT recipes (recipe+)>
+    <!ELEMENT recipe (recipe_head, recipe_body, recipe_footer?, document_info)>
+    <!ELEMENT recipe_head (recipe_name, recipe_author?, meal_type)>
+    <!ELEMENT recipe_name (#PCDATA)>
+    <!ELEMENT recipe_author (#PCDATA)>
+    <!ELEMENT meal_type (#PCDATA)>
+    <!ELEMENT recipe_body (ingredients, directions)>
+    <!ELEMENT ingredients (ingredient+)>
+    <!ELEMENT ingredient (#PCDATA)>
+    <!ELEMENT directions (direction)+ >
+    <!ELEMENT direction (#PCDATA)>
+    <!ELEMENT recipe_footer (serving?, preparation_time?, cooking_time?)>
+    <!ELEMENT serving (#PCDATA)>
+    <!ELEMENT preparation_time (#PCDATA)>
+    <!ELEMENT cooking_time (#PCDATA)>
+    <!ELEMENT document_info (document_author, date_updated, source)>
+    <!ELEMENT document_author (#PCDATA)>
+    <!ELEMENT date_updated (#PCDATA)>
+    <!ELEMENT source (#PCDATA)>
+
+-------------------------------------------------------------------------------------
+
+XML: 
+    <CorsoDiLaurea facolta="Ingegneria dell'Informazione">
+        <Corso semestre="primo" numeroCrediti="6" sede="Roma" tipo="opzionale">
+            <NomeCorso>
+                Linguaggi per il Web
+            </NomeCorso>
+            <DescrizioneCorso>
+                Corso su analisi sintattica e traduzione guidata dalla sintassi,
+                HTML, XML, RDF.
+            </DescrizioneCorso>
+            <Docente>
+                <Cognome>Rosati</Cognome>
+                <Nome>Riccardo</Nome>
+                <Dipartimento>DIS</Dipartimento>
+            </Docente>
+            <Studente matricola="9999">
+                <Cognome>Rossi</Cognome>
+                <Nome>Mario</Nome>
+                <Commento>
+                    Proveniente dal Corso di Laurea in Ingegneria Meccanica
+                </Commento>
+            </Studente>
+            <Studente matricola="8888">
+                <Cognome>Bianchi</Cognome>
+                <Nome>Paola</Nome>
+                <Foto url="bianchipaola.jpg">
+            </Studente>
+        </Corso>
+    </CorsoDiLaurea>   
+
+DTD:
+    <!ELEMENT CorsoDiLaurea Corso>
+    <!ATTLIST CorsoDiLaurea facolta CDATA #REQUIRED>
+    <!ELEMENT Corso (NomeCorso, DescrizioneCorso?, Docente+, Studente*)>
+    <!ATTLIST Corso
+        semestre (primo | secondo | annuale) #REQUIRED
+        numeroCrediti CDATA #REQUIRED
+        sede CDATA #IMPLIED
+        tipo (obbligatorio | facoltativo) #IMPLIED>
+    <!ELEMENT NomeCorso #PCDATA>
+    <!ELEMENT DescrizioneCorso #PCDATA>
+    <!ELEMENT Docente (Cognome, Nome, Dipartimento, (Foto | Commento)*)>
+    <!ELEMENT Cognome #PCDATA>
+    <!ELEMENT Nome #PCDATA>
+    <!ELEMENT Dipartimento #PCDATA>
+    <!ELEMENT Studente (Cognome, Nome, (Foto | Commento)*)>
+    <!ATTLIST Studente matricola ID #REQUIRED>
+    <!ELEMENT Commento #PCDATA>
+    <!ELEMENT Foto #PCDATA>
+    <!ATTLIST Foto url CDATA #REQUIRED>
+
+-------------------------------------------------------------------------------------
+
+XML:
+    <Dialogo><Trascrizione nome_file="miofile">
+        <Parlanti>
+            <Parlante id="par1" nome="mario" tipo="male" accento="toscano"/>
+            <Parlante id="par2" nome="carla" tipo="female" accento="romano"/>
+        </Parlanti>
+        <Argomenti>
+            <Argomento id="a45" descrizione="generale"/>
+            <Argomento id="a46" descrizione="generale"/>
+        </Argomenti>
+        <Episodio>
+            <Sezione tipo="rapporto" argomento="a45" start="900" end="915">
+                <Turno parlanti="par1 par2" start="900" end="915" modo="spontaneo">
+                    cosa hai <Evento tipo="rumore" desc="colpo di tosse"/> fatto ieri?
+                </Turno>
+            </Sezione>
+        </Episodio>
+    </Trascrizione></Dialogo>
+
+DTD:
+    <!ELEMENT Dialogo Trascrizione>
+    <!ELEMENT Trascrizione (Parlanti, Argomenti, Episodio+)>
+    <!ATTLIST Trascrizione nome_file ID #REQUIRED>
+    <!ELEMENT Parlanti (Parlante)+>
+    <!ELEMENT Parlante EMPTY>
+    <!ATTLIST Parlante 
+                        id ID #REQUIRED
+                        nome CDATA #REQUIRED
+                        tipo (male, female) #REQUIRED
+                        accento CDATA #IMPLIED>
+    <!ELEMENT Argomenti (Argomento)+>
+    <!ELEMENT Argomento EMPTY>
+    <!ATTLIST Argomento 
+                        id ID #REQUIRED
+                        descrizione CDATA #IMPLIED>
+    <!ELEMENT Episodio (Sezione)+>
+    <!ELEMENT Sezione (Turno)+>
+    <!ATTLIST Sezione 
+                        tipo CDATA #REQUIRED
+                        argomento IDREF #REQUIRED
+                        start CDATA #REQUIRED
+                        end CDATA #REQUIRED>
+    <!ELEMENT Turno (#PCDATA | Evento)*>
+    <!ATTLIST Turno 
+                        parlanti IDREF #REQUIRED
+                        start CDATA #REQUIRED
+                        end CDATA #REQUIRED
+                        modo CDATA #IMPLIED>
+    <!ELEMENT Evento EMPTY>
+    <!ATTLIST Evento 
+                        tipo CDATA #REQUIRED
+                        desc #IMPLIED>
+
+-------------------------------------------------------------------------------------
+
+XML:
+    <games>	
+        <game	score="1-1">	
+            <home-team>Roma</home-team>	
+            <ex-team>Lazio</ex-team>	
+            <scores>	
+                <score time="15">	
+                    <player>Klose</player>	
+                </score>	
+                <score	time="85" type="penalty">	
+                    <player>Tox</player>	
+                </score>	
+            </scores>	
+            <yellows>	
+                <player>Tox</player>	
+                <player>Hernanes</player>	
+            </yellows>	
+            <reds>	
+                <player>Kjaer</player>	
+            </reds>	
+        </game>	
+    </games>
+
+DTD:
+    <!ELEMENT games game*>
+    <!ELEMENT game (home-team, ex-team, scores, yellows, reds)>
+    <!ATTLIST game score CDATA #REQUIRED>
+    <!ELEMENT home-team #PCDATA>
+    <!ELEMENT ex-team #PCDATA>
+    <!ELEMENT scores (score)*>
+    <!ELEMENT score (player)*>
+    <!ATTLIST score 
+                    time CDATA #REQUIRED
+                    type (filed | penalty) #IMPLIED>
+    <!ELEMENT player #PCDATA>
+    <!ELEMENT yellows (player)*>
+    <!ELEMENT reds (player)*>
+
+-------------------------------------------------------------------------------------
