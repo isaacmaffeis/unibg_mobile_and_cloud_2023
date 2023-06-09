@@ -76,7 +76,7 @@ db.restaurants.find({"address.coord.0" : {$lt : -95.754168}});
 
 //11. Write a MongoDB query to find the restaurants that do not prepare any cuisine of 'American'
 // and their grade score more than 70 and lattitude less than -65.754168.
-db.restaurants.find({$and : [ {cuisine:{$ne : 'American'}, grades : { $elemMatch : { "score" : {$gt: 9}}}, "address.coord.0" : {$lt : -65.754168}}]})
+db.restaurants.find({$and : [ {cuisine:{$ne : 'American'}}, {grades : { $elemMatch : { "score" : {$gt: 9}}}}, {"address.coord.0" : {$lt : -65.754168}}]})
 
 //12. Write a MongoDB query to find the restaurants which do not prepare any cuisine of 'American' 
 // and achieved a score more than 70 and located in the longitude less than -65.754168.
