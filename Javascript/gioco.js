@@ -10,15 +10,7 @@
     this.codice = null;
     this.titolo = null;
     this.strumento = null;
-
-    this.numero_giocatori = function(numero_giocatori){
-        if (typeof(numero_giocatori) == "number")
-            this.giocatori = numero_giocatori;
-        else{
-            this.minimo = numero_giocatori[0];
-            this.massimo = numero_giocatori[1];
-        }
-    }
+    this.numero_giocatori = null
 
     this.setCodice = function(codice){
         this.codice = codice;
@@ -33,7 +25,19 @@
     }
 
     this.setGiocatori = function(numero_giocatori){
-        this.numero_giocatori = numero_giocatori;
+        if (typeof(numero_giocatori) == "number")
+            this.numero_giocatori = numero_giocatori;
+        else {
+            this.numero_giocatori = {
+                minimo : numero_giocatori[0],
+                massimo : numero_giocatori[1]
+            }
+        /* else {
+            this.numero_giocatori = new Object();
+            this.numero_giocatori.minimo = numero_giocatori[0];
+            this.numero_giocatori.massimo = numero_giocatori[1];
+            } */
+        }
     }
 
     this.genHTML = function(ID){
