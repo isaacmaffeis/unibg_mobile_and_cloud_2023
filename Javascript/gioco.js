@@ -28,9 +28,14 @@
         if (typeof(numero_giocatori) == "number")
             this.numero_giocatori = numero_giocatori;
         else {
-            this.numero_giocatori = {
-                minimo : numero_giocatori[0],
-                massimo : numero_giocatori[1]
+            try{
+                this.numero_giocatori = {
+                    minimo : numero_giocatori[0],
+                    massimo : numero_giocatori[1]
+                }
+            } catch(e){
+                alert("An exception occurred." + "Error name: " + e.name +
+                ". Error message: " + e.message);
             }
         /* else {
             this.numero_giocatori = new Object();
